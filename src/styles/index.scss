@@ -22,6 +22,8 @@ body {
 }
 
 .calendar {
+  counter-reset: day;
+
   display: flex;
   flex-wrap: wrap;
   gap: $day-gap;
@@ -53,8 +55,16 @@ body {
     transform $hover-duration;
 
   &::before {
-    content: '';
+    content: counter(day);
+    counter-increment: day;
+
     position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     font-family: $day-font;
     font-size: $day-font-size;
   }
@@ -72,14 +82,24 @@ body {
       content: '#{$i}';
     }
   }
+
+  .calendar--month-length-#{$len} .calendar__day:nth-child(n + #{$len + 1}) {
+    display: none;
+  }
 }
 
-$days: sun, mon, tue, wed, thu, fri, sat;
-$days-length: length($days);
+$days: (
+  'sun': 6,
+  'mon': 0,
+  'tue': 1,
+  'wed': 2,
+  'thu': 3,
+  'fri': 4,
+  'sat': 5,
+);
 
-@for $i from 1 through $days-length {
-  $day: nth($days, $i);
-  .calendar--start-day-#{$day} .calendar__day:first-child {
-    margin-left: ($day-size + $day-gap) * ($i - 1);
+@each $day, $index in $days {
+  .calendar--start-day-#{$day} :first-child {
+    margin-left: ($day-size + $day-gap) * $index;
   }
 }
