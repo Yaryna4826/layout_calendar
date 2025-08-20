@@ -28,7 +28,7 @@ body {
   flex-wrap: wrap;
   gap: $day-gap;
 
-  max-width: ($day-size + $day-gap) * $columns - $day-gap + $calendar-gap * 2;
+  max-width: ($day-size + $day-gap) * $columns - $day-gap;
   padding: $calendar-gap;
 }
 
@@ -41,6 +41,7 @@ body {
   align-items: center;
   justify-content: center;
 
+  box-sizing: border-box;
   width: $day-size;
   height: $day-size;
   border: $day-border;
@@ -58,7 +59,6 @@ body {
     content: counter(day);
     counter-increment: day;
 
-    position: absolute;
     inset: 0;
 
     display: flex;
